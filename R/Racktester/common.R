@@ -50,6 +50,13 @@ TBBarLoader <- function(filepath, isIntraday = F, returnXTS = T) {
   return(df)
 }
 
+IntradayBarLoader <- function(filepath){
+  df <- readr::read_csv(filepath, col_names = FALSE) %>% mutate(DateTime = as.POSIXct(paste(X1, X2),format = '%m/%d/%Y %H:%M:%S'))
+  df <- xts(df[,3:7], order.by = df[["DateTime"]])
+  colnames(df) <- c('Open', 'High', 'Low', 'Close', 'Volume')
+  df
+}
+
 xts.sync <- function(low.freq, high.freq)   #only able to sync 1-dimensional series
 {
   combined <- cbind(low.freq, high.freq)

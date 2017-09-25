@@ -1,3 +1,5 @@
+es <- readr::read_csv('data/@ES.csv', col_names = FALSE) %>% mutate(DateTime = paste(X1, X2))
+
 etf_list <- readr::read_csv('data/vanguard_etf_list.csv')
 data <- purrr::map(etf_list[["SYMBOL"]], function(x) {getSymbols(x, src = "google",      #Seperated the data into two seperate data sets and set auto.assign=FALSE
                                                                  from = as.Date('2014-01-01'),
